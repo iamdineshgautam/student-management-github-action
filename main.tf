@@ -11,7 +11,7 @@ terraform {
   }
 
   backend "s3" {
-    bucket       = "deploywithdinesh.space "
+    bucket       = "deploywithdinesh.space"
     key          = "student-management/eks/terraform.tfstate"
     region       = "ap-south-1"
     use_lockfile = true
