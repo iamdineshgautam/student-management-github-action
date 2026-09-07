@@ -19,4 +19,8 @@ jobs:
           distribution: temurin
           java-version: '21'
           cache: maven
+
+      - name: Build Application
+        uses: mvn clean package
+        
           
