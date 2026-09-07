@@ -1,8 +1,8 @@
-name: CI/CD Github Actions
+name: CI/CD using Github Actions
 
-on:
+on: 
   push:
-    branches: 
+    branches:
       - master
 
 jobs:
@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Chceckout Code
+      - name: Checkout Code
         uses: actions/checkout@v5
 
       - name: setup java
@@ -19,8 +19,12 @@ jobs:
           distribution: temurin
           java-version: '21'
           cache: maven
-
+          
       - name: Build Application
-        uses: mvn clean package
+        run: mvn clean package
+
+      
+
+        
         
           
