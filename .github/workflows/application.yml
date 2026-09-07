@@ -1,1 +1,14 @@
+name: CI/CD Github Actions
 
+on:
+  push:
+    branches: 
+      - master
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Chceckout Code
+        uses: actions/checkout@v5
