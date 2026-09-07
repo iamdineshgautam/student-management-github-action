@@ -30,6 +30,9 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ap-south-1
 
+      - name: Push Artifact to S3
+        uses: aws s3 cp target/*.war s3://deploywithdinesh.space/student.war
+        
       
 
         
