@@ -31,10 +31,10 @@ jobs:
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: us-west-2
+          aws-region: ap-south-1
           
       - name: Push Artifact to S3
-        run: aws s3 cp target/*.war s3://mayurcbz.space/student.war
+        run: aws s3 cp target/*.war s3://deploywithdinesh.space/student.war
 
       - name: SonarQube Analysis 
         env:
