@@ -1,12 +1,15 @@
-name: CI/CD using Github Actions
+name: Application CI/CD
 
-on: 
-  push:
-    branches:
-      - master
+on:
+  workflow_run:
+    workflows: ["Infrastructure CI/CD"]
+    types:
+      - completed
 
 jobs:
-  build:
+  build-deploy:
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+
     runs-on: ubuntu-latest
 
     steps:
@@ -76,33 +79,22 @@ jobs:
           docker tag student:latest 231101979902.dkr.ecr.ap-south-1.amazonaws.com/student:latest
           docker push 231101979902.dkr.ecr.ap-south-1.amazonaws.com/student:latest
 
-      - name: Setup Terraform 
-        uses: hashicorp/setup-terraform@v4
-
-      - name: Terraform init
-        run: terraform init
-
-      - name: Terraform fmt 
-        run: terraform fmt
-
-      - name: Terraform validate
-        run: terraform validate
-
-      - name: Terraform apply 
-        # run: terraform apply -auto-approve
-        run: terraform destroy -auto-approve
-
       - name: Install kubectl
         uses: azure/setup-kubectl@v4
         with:
           version: latest
 
-      - name: Configure EKS cluster 
-        run: aws eks update-kubeconfig --name my-eks-cluster --region ap-south-1
-          
-      - name: Deployment On kubernetes
+      - name: Configure EKS Cluster
+        run: |
+          aws eks update-kubeconfig \
+          --name my-eks-cluster \
+          --region ap-south-1
+
+      - name: Deploy Application to Kubernetes
         run: |
           kubectl apply -f k8s/
+
           sleep 30
-          kubectl get pods 
+
+          kubectl get pods
           kubectl get svc -o wide
