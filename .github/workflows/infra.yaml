@@ -5,7 +5,8 @@ on:
     branches:
       - master
     paths:
-      - 'terraform/**'
+      # - 'terraform/**'
+      - '*.tf'
       - '.github/workflows/infra.yaml'
 
 jobs:
@@ -39,5 +40,5 @@ jobs:
         run: terraform plan 
 
       - name: Terraform Apply
-        # run: terraform apply -auto-approve
-        run: terraform destroy -auto-approve
+        run: terraform apply -auto-approve
+        # run: terraform destroy -auto-approve
